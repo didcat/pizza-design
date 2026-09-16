@@ -34,3 +34,7 @@ export { default as Paragraph, default as P } from './components/Paragraph.svelt
 export type { Color, TextColor, Size, Variant, Option } from './types';
 export { default as Teaser } from './components/Teaser.svelte';
 export { default as Disclosure } from './components/Disclosure.svelte';
+
+export { default as ImageUpload } from './components/ImageUpload.svelte';
+export type { ImageFormat, ImageAspect } from './image/crop';
+export type { ImageUploadLabels } from './image/labels';

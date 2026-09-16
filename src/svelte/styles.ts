@@ -1,4 +1,14 @@
 export const styles = {
+	imageUpload: {
+		base: 'w-full min-w-0 gap-4',
+		drop: 'border border-dashed border-border bg-base-200 p-4 space-y-3',
+		dragging: 'border-primary bg-primary-soft',
+		editor: 'grid min-w-0 gap-6 md:grid-cols-[minmax(0,1fr)_16rem]',
+		canvas: 'block w-full touch-none cursor-move rounded-box border border-border bg-base-300',
+		controls: 'grid content-start gap-2 min-w-0',
+		meta: 'font-mono text-xs text-muted break-words',
+		error: 'text-sm text-error',
+	},
 	codeblock: {
 		base: String.raw`block w-full min-w-0 bg-base-300 [&_.hljs]:text-xs [&_.hljs-keyword]:text-primary [&_.hljs-operator]:text-primary [&_.hljs-built\_in]:text-primary [&_.hljs-meta]:text-primary [&_.hljs-string]:text-success [&_.hljs-attr]:text-success [&_.hljs-number]:text-accent [&_.hljs-literal]:text-accent [&_.hljs-variable]:text-accent [&_.hljs-symbol]:text-accent [&_.hljs-subst]:text-base-content [&_.hljs-title]:text-secondary [&_.hljs-function]:text-secondary [&_.hljs-comment]:text-neutral-content [&_.hljs-comment]:opacity-60`,
 		filename: 'border-base-200 border-b px-4 py-2 font-mono text-xs break-all',
