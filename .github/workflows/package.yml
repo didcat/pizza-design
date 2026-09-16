@@ -83,4 +83,4 @@ jobs:
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   DIST_TAG: ${{ needs.package.outputs.dist-tag }}
-              run: npm publish release-package/package.tgz --tag "$DIST_TAG" --registry https://npm.pkg.github.com --ignore-scripts
+              run: npm publish ./release-package/package.tgz --tag "$DIST_TAG" --registry https://npm.pkg.github.com --ignore-scripts
