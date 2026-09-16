@@ -1,0 +1,86 @@
+name: Package
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+    release:
+        types: [published]
+
+permissions:
+    contents: read
+
+jobs:
+    package:
+        name: Check and package
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+        outputs:
+            dist-tag: ${{ steps.release.outputs.dist-tag }}
+        steps:
+            - uses: actions/checkout@v7
+              with:
+                  persist-credentials: false
+
+            - uses: actions/setup-node@v7
+              with:
+                  node-version: '24'
+                  package-manager-cache: false
+
+            - uses: pnpm/action-setup@v6
+              with:
+                  cache: true
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Prepare release version
+              if: github.event_name == 'release'
+              id: release
+              env:
+                  RELEASE_TAG: ${{ github.event.release.tag_name }}
+                  RELEASE_PRERELEASE: ${{ github.event.release.prerelease }}
+              run: node scripts/prepare-release.ts
+
+            - name: Check, build, and pack
+              run: pnpm pack --out "$RUNNER_TEMP/package.tgz"
+
+            - name: Upload release package
+              if: github.event_name == 'release'
+              uses: actions/upload-artifact@v7
+              with:
+                  name: release-package
+                  path: ${{ runner.temp }}/package.tgz
+                  if-no-files-found: error
+                  retention-days: 7
+
+    publish:
+        name: Publish to GitHub Packages
+        if: github.event_name == 'release'
+        needs: package
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        permissions:
+            contents: read
+            packages: write
+        concurrency:
+            group: github-packages-publish
+            cancel-in-progress: false
+        steps:
+            - uses: actions/setup-node@v7
+              with:
+                  node-version: '24'
+                  registry-url: https://npm.pkg.github.com
+                  scope: '@didcat'
+                  package-manager-cache: false
+
+            - uses: actions/download-artifact@v8
+              with:
+                  name: release-package
+                  path: release-package
+
+            - name: Publish checked tarball
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  DIST_TAG: ${{ needs.package.outputs.dist-tag }}
+              run: npm publish release-package/package.tgz --tag "$DIST_TAG" --registry https://npm.pkg.github.com --ignore-scripts
