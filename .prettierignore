@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.svelte-kit/
+pnpm-lock.yaml
+AGENTS.md
+.agents/
+.codex/

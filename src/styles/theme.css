@@ -1,0 +1,78 @@
+@source '../svelte';
+
+@theme {
+	--font-sans: 'Josefin Sans', sans-serif;
+	--font-cute: 'Sour Gummy', sans-serif;
+
+	--color-muted: #bfb5bf;
+	--color-border: #393039;
+	--color-focus: #eb8cb0;
+	--color-primary-soft: #38232d;
+	--color-primary-soft-content: #f0b3ca;
+	--color-accent-soft: #302638;
+	--color-accent-soft-content: #d3b9ec;
+	--color-success-soft: #24322d;
+	--color-success-soft-content: #b7d8c4;
+	--color-success-detail: #8abc9d;
+}
+
+@plugin 'daisyui' {
+	logs: false;
+	themes: 'pizza' --default;
+}
+
+@plugin 'daisyui/theme' {
+	name: 'pizza';
+
+	default: true;
+	prefersdark: true;
+	color-scheme: 'dark';
+
+	--color-base-100: #151315;
+	--color-base-200: #1b181b;
+	--color-base-300: #242024;
+	--color-base-content: #e8e8e8;
+
+	--color-primary: #cc4477;
+	--color-primary-content: #e8e8e8;
+
+	--color-secondary: #a65a7d;
+	--color-secondary-content: #e8e8e8;
+
+	--color-accent: #7f6bbf;
+	--color-accent-content: #e8e8e8;
+
+	--color-neutral: #2a2a2a;
+	--color-neutral-content: #e8e8e8;
+
+	--color-info: #6f98c4;
+	--color-info-content: #e1e9f3;
+
+	--color-success: #67a67b;
+	--color-success-content: #dfece3;
+
+	--color-warning: #c5a05d;
+	--color-warning-content: #efe7da;
+
+	--color-error: #bf6b72;
+	--color-error-content: #f6e3e3;
+
+	--radius-selector: 0px;
+	--radius-field: 0px;
+	--radius-box: 0px;
+
+	--size-selector: 0.25rem;
+	--size-field: 0.25rem;
+
+	--border: 1px;
+	--depth: 0;
+	--noise: 0;
+}
+
+iconify-icon {
+	@apply inline-block size-[1em];
+}
+
+html {
+	@apply motion-safe:scroll-smooth;
+}
